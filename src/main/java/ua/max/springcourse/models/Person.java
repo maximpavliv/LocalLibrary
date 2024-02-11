@@ -1,6 +1,5 @@
 package ua.max.springcourse.models;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -9,15 +8,14 @@ public class Person {
 
     @Size(min = 2, max = 50, message = "Full name must be between 2 and 50 characters")
     private String fullName;
-    @Min(value = 0, message = "Age should be greater than 0")
-    private int age;
+    private int yearOfBirth;
 
     public Person() {}
 
-    public Person(int id, String fullName, int age) {
+    public Person(int id, String fullName, int yearOfBirth) {
         this.id = id;
         this.fullName = fullName;
-        this.age = age;
+        this.yearOfBirth = yearOfBirth;
     }
 
     public int getId() {
@@ -36,11 +34,11 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public int getAge() {
-        return age;
+    public int getYearOfBirth() {
+        return yearOfBirth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
     }
 }
