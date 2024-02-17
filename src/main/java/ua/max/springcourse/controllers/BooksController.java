@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.max.springcourse.dao.BookDAO;
+import ua.max.springcourse.dao.PersonDAO;
 import ua.max.springcourse.models.Book;
+import ua.max.springcourse.models.Person;
 import ua.max.springcourse.util.BookValidator;
 
 @Controller
@@ -15,11 +17,13 @@ import ua.max.springcourse.util.BookValidator;
 public class BooksController {
 
     private BookDAO bookDAO;
+    private PersonDAO personDAO;
     private BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, BookValidator bookValidator ) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
         this.bookValidator = bookValidator;
     }
 
@@ -30,8 +34,10 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("borrower", personDAO.getBorrower(id));
+        model.addAttribute("people", personDAO.index());
         return "books/show";
     }
 
@@ -60,12 +66,27 @@ public class BooksController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        // we don't receive this field in the attributes, so we have to reset it.
+        book.setBorrowersId(bookDAO.show(id).getBorrowersId());
+
         bookValidator.validate(book, bindingResult);
 
         if (bindingResult.hasErrors())
             return "books/edit";
 
         bookDAO.update(id, book);
+        return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id) {
+        bookDAO.release(id);
+        return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/borrow")
+    public String borrow(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+        bookDAO.borrow(id, person.getId());
         return "redirect:/books";
     }
 

@@ -8,6 +8,16 @@
 
 <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
 
+<p th:if="${borrowedBooks.isEmpty()}">This person hasn't borrowed any books.</p>
+
+<div th:if="${!borrowedBooks.isEmpty()}">
+    <hr/>
+    <b>Books:</b>
+    <div th:each="book : ${borrowedBooks}">
+        <p th:text="${book.getBookName() + ', ' + book.getAuthorName() + ', ' + book.getYearOfPublication()}">VALUE</p>
+    </div>
+</div>
+
 <hr/>
 
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">

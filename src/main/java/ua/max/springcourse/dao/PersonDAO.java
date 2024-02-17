@@ -32,6 +32,13 @@ public class PersonDAO {
                 new BeanPropertyRowMapper<>(Person.class), fullName).stream().findAny();
     }
 
+    public Optional<Person> getBorrower(int bookId) {
+        return jdbcTemplate.query(
+                "SELECT Person.id, Person.full_name, Person.year_of_birth " +
+                        "FROM Person JOIN Book on Person.id=Book.borrowers_id WHERE book.id=?",
+                new BeanPropertyRowMapper<>(Person.class), bookId).stream().findAny();
+    }
+
     public void save(Person person) {
         jdbcTemplate.update("INSERT INTO Person(full_name, year_of_birth) VALUES(?, ?)", person.getFullName(),
                 person.getYearOfBirth());

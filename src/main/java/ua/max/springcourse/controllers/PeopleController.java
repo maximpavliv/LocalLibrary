@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.max.springcourse.dao.BookDAO;
 import ua.max.springcourse.dao.PersonDAO;
 import ua.max.springcourse.models.Person;
 import ua.max.springcourse.util.PersonValidator;
@@ -15,11 +16,13 @@ import ua.max.springcourse.util.PersonValidator;
 public class PeopleController {
 
     private PersonDAO personDAO;
+    private BookDAO bookDAO;
     private PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
+    public PeopleController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
         this.personValidator = personValidator;
     }
 
@@ -32,6 +35,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("borrowedBooks", bookDAO.getBorrowersBooks(id));
         return "people/show";
     }
 

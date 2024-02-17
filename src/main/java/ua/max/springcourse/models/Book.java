@@ -13,13 +13,16 @@ public class Book {
 
     private int yearOfPublication;
 
+    private Integer borrowersId;
+
     public Book() {}
 
-    public Book(int id, String bookName, String authorName, int yearOfPublication) {
+    public Book(int id, String bookName, String authorName, int yearOfPublication, Integer borrowersId) {
         this.id = id;
         this.bookName = bookName;
         this.authorName = authorName;
         this.yearOfPublication = yearOfPublication;
+        this.borrowersId = borrowersId;
     }
 
     public int getId() {
@@ -53,4 +56,13 @@ public class Book {
     public void setYearOfPublication(int yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
+
+    public Integer getBorrowersId() {
+        return borrowersId;
+    }
+
+    public void setBorrowersId(Integer borrowersId) {
+        this.borrowersId = borrowersId;
+    }
+
 }
