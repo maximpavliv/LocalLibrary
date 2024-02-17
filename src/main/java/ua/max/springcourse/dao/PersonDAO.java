@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ua.max.springcourse.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -24,6 +25,11 @@ public class PersonDAO {
     public Person show(int id) {
         return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new BeanPropertyRowMapper<>(Person.class), id)
                 .stream().findAny().orElse(null);
+    }
+
+    public Optional<Person> show(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM Person WHERE full_name=?",
+                new BeanPropertyRowMapper<>(Person.class), fullName).stream().findAny();
     }
 
     public void save(Person person) {

@@ -1,28 +1,29 @@
 package ua.max.springcourse.models;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public class Person {
-    private int id;
+    private Integer id;
 
     @Size(min = 2, max = 50, message = "Full name must be between 2 and 50 characters")
+    @Pattern(regexp = "[A-Z][a-z]*([-\s][A-Z][a-z]*)*",
+            message = "Your full name must contain names starting with uppercase and separated by dashes or spaces")
     private String fullName;
     private int yearOfBirth;
 
     public Person() {}
 
-    public Person(int id, String fullName, int yearOfBirth) {
+    public Person(Integer id, String fullName, int yearOfBirth) {
         this.id = id;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -8,16 +8,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.max.springcourse.dao.BookDAO;
 import ua.max.springcourse.models.Book;
+import ua.max.springcourse.util.BookValidator;
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
 
     private BookDAO bookDAO;
+    private BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO) {
+    public BooksController(BookDAO bookDAO, BookValidator bookValidator ) {
         this.bookDAO = bookDAO;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping()
@@ -39,6 +42,8 @@ public class BooksController {
 
     @PostMapping()
     public String create(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+
         if (bindingResult.hasErrors())
             return "books/new";
 
@@ -55,6 +60,8 @@ public class BooksController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        bookValidator.validate(book, bindingResult);
+
         if (bindingResult.hasErrors())
             return "books/edit";
 
