@@ -10,6 +10,8 @@ import ua.max.springcourse.dao.BookDAO;
 import ua.max.springcourse.dao.PersonDAO;
 import ua.max.springcourse.models.Book;
 import ua.max.springcourse.models.Person;
+import ua.max.springcourse.services.BooksService;
+import ua.max.springcourse.services.PeopleService;
 import ua.max.springcourse.util.BookValidator;
 
 @Controller
@@ -18,26 +20,30 @@ public class BooksController {
 
     private BookDAO bookDAO;
     private PersonDAO personDAO;
+    private BooksService booksService;
+    private PeopleService peopleService;
     private BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO, BooksService booksService, PeopleService peopleService,
+                           BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.personDAO = personDAO;
+        this.booksService = booksService;
+        this.peopleService = peopleService;
         this.bookValidator = bookValidator;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("books", bookDAO.index());
+        model.addAttribute("books", booksService.findAll());
         return "books/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
-        model.addAttribute("book", bookDAO.show(id));
-        model.addAttribute("borrower", personDAO.getBorrower(id));
-        model.addAttribute("people", personDAO.index());
+    public String show(@PathVariable("id") int bookId, Model model, @ModelAttribute("person") Person person) {
+        model.addAttribute("book", booksService.findById(bookId));
+        model.addAttribute("people", peopleService.findAll());
         return "books/show";
     }
 
@@ -53,13 +59,13 @@ public class BooksController {
         if (bindingResult.hasErrors())
             return "books/new";
 
-        bookDAO.save(book);
+        booksService.save(book);
         return "redirect:/books";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", booksService.findById(id));
         return "books/edit";
     }
 
@@ -67,32 +73,32 @@ public class BooksController {
     public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         // we don't receive this field in the attributes, so we have to reset it.
-        book.setBorrowersId(bookDAO.show(id).getBorrowersId());
+        book.setBorrower(booksService.findById(id).getBorrower());
 
         bookValidator.validate(book, bindingResult);
 
         if (bindingResult.hasErrors())
             return "books/edit";
 
-        bookDAO.update(id, book);
+        booksService.update(id, book);
         return "redirect:/books";
     }
 
     @PatchMapping("/{id}/release")
     public String release(@PathVariable("id") int id) {
-        bookDAO.release(id);
+        booksService.release(id);
         return "redirect:/books";
     }
 
     @PatchMapping("/{id}/borrow")
     public String borrow(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
-        bookDAO.borrow(id, person.getId());
+        booksService.borrow(id, person.getId());
         return "redirect:/books";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        bookDAO.delete(id);
+        booksService.delete(id);
         return "redirect:/books";
     }
 }
