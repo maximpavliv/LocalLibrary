@@ -42,6 +42,10 @@ public class BooksService {
         return booksRepository.findByBorrowerId(borrowerId);
     }
 
+    public List<Book> searchBooks(String searchString) {
+        return booksRepository.findByBookNameStartingWithIgnoreCase(searchString);
+    }
+
     @Transactional
     public void release(int id) {
         Book book = findById(id);

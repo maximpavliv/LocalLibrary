@@ -14,6 +14,8 @@ import ua.max.springcourse.services.BooksService;
 import ua.max.springcourse.services.PeopleService;
 import ua.max.springcourse.util.BookValidator;
 
+import java.util.*;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
@@ -55,6 +57,14 @@ public class BooksController {
     @GetMapping("/new")
     public String newBook(@ModelAttribute("book") Book book) {
         return "books/new";
+    }
+
+    @GetMapping("/search")
+    public String searchBook(@RequestParam(value = "searchString", required = false) String searchString, Model model) {
+        List<Book> foundBooks = booksService.searchBooks(searchString);
+        model.addAttribute("searchString", searchString);
+        model.addAttribute("foundBooks", foundBooks);
+        return "books/search";
     }
 
     @PostMapping()
