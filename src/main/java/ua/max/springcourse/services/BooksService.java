@@ -1,5 +1,7 @@
 package ua.max.springcourse.services;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.max.springcourse.models.Book;
@@ -22,8 +24,14 @@ public class BooksService {
         this.peopleService = peopleService;
     }
 
-    public List<Book> findAll() {
-        return booksRepository.findAll();
+    public List<Book> findAll(boolean sortByYear) {
+        return booksRepository.findAll(sortByYear? Sort.by("yearOfPublication") : Sort.unsorted());
+    }
+
+    public List<Book> findAll(int page, int booksPerPage, boolean sortByYear) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage,
+                        sortByYear ? Sort.by("yearOfPublication") : Sort.unsorted()))
+                .getContent();
     }
 
     public Book findById(int id) {
