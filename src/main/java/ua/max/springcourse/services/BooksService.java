@@ -8,6 +8,7 @@ import ua.max.springcourse.models.Book;
 import ua.max.springcourse.models.Person;
 import ua.max.springcourse.repositories.BooksRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class BooksService {
         Book book = findById(id);
         Person returner = book.getBorrower();
         book.setBorrower(null);
+        book.setBorrowedDate(null);
         if (returner != null && returner.getBorrowedBooks() != null)
             returner.getBorrowedBooks().remove(book);
     }
@@ -60,6 +62,7 @@ public class BooksService {
         Book book = findById(bookId);
         Person borrower = peopleService.findById(personId);
         book.setBorrower(borrower);
+        book.setBorrowedDate(LocalDateTime.now());
         if (borrower.getBorrowedBooks() == null)
             borrower.setBorrowedBooks(new ArrayList<>());
         borrower.getBorrowedBooks().add(book);

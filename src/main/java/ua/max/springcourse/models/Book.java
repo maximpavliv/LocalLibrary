@@ -2,6 +2,7 @@ package ua.max.springcourse.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "book")
@@ -25,6 +26,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "borrowers_id", referencedColumnName = "id")
     private Person borrower;
+
+    @Column(name = "borrowed_date")
+    private LocalDateTime borrowedDate;
 
     public Book() {}
 
@@ -72,5 +76,22 @@ public class Book {
 
     public void setBorrower(Person borrower) {
         this.borrower = borrower;
+    }
+
+    public LocalDateTime getBorrowedDate() {
+        return borrowedDate;
+    }
+
+    public void setBorrowedDate(LocalDateTime borrowedDate) {
+        this.borrowedDate = borrowedDate;
+    }
+
+    @Transient
+    public boolean isBorrowingPeriodExceeded() {
+        if (borrowedDate == null) {
+            return false;
+        }
+        LocalDateTime dueDate = borrowedDate.plusDays(10);
+        return LocalDateTime.now().isAfter(dueDate);
     }
 }
