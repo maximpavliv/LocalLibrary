@@ -1,4 +1,4 @@
-package ua.max.springcourse.controllers;
+package ua.max.springcourse.LocalLibrary.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.max.springcourse.dao.BookDAO;
-import ua.max.springcourse.dao.PersonDAO;
-import ua.max.springcourse.models.Person;
-import ua.max.springcourse.services.BooksService;
-import ua.max.springcourse.services.PeopleService;
-import ua.max.springcourse.util.PersonValidator;
+import ua.max.springcourse.LocalLibrary.dao.BookDAO;
+import ua.max.springcourse.LocalLibrary.dao.PersonDAO;
+import ua.max.springcourse.LocalLibrary.models.Person;
+import ua.max.springcourse.LocalLibrary.services.BooksService;
+import ua.max.springcourse.LocalLibrary.services.PeopleService;
+import ua.max.springcourse.LocalLibrary.util.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
@@ -35,6 +35,7 @@ public class PeopleController {
 
     @GetMapping()
     public String index(Model model) {
+        System.out.println("Hello from index of people");
         model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }

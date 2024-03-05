@@ -1,12 +1,6 @@
-package ua.max.springcourse.dao;
+package ua.max.springcourse.LocalLibrary.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ua.max.springcourse.models.Book;
-
-import java.util.List;
 
 @Component
 public class BookDAO {

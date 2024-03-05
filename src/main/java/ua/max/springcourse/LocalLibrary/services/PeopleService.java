@@ -1,10 +1,10 @@
-package ua.max.springcourse.services;
+package ua.max.springcourse.LocalLibrary.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.max.springcourse.models.Person;
-import ua.max.springcourse.repositories.PeopleRepository;
+import ua.max.springcourse.LocalLibrary.models.Person;
+import ua.max.springcourse.LocalLibrary.repositories.PeopleRepository;
 
 import java.util.List;
 import java.util.Optional;

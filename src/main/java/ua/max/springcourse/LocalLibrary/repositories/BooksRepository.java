@@ -1,8 +1,8 @@
-package ua.max.springcourse.repositories;
+package ua.max.springcourse.LocalLibrary.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.max.springcourse.models.Book;
+import ua.max.springcourse.LocalLibrary.models.Book;
 
 import java.util.List;
 

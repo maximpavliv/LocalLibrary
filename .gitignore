@@ -1,5 +1,6 @@
 src/main/resources/database.properties
 src/main/resources/hibernate.properties
+src/main/resources/application.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

@@ -1,12 +1,12 @@
-package ua.max.springcourse.util;
+package ua.max.springcourse.LocalLibrary.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.max.springcourse.dao.PersonDAO;
-import ua.max.springcourse.models.Person;
-import ua.max.springcourse.services.PeopleService;
+import ua.max.springcourse.LocalLibrary.dao.PersonDAO;
+import ua.max.springcourse.LocalLibrary.models.Person;
+import ua.max.springcourse.LocalLibrary.services.PeopleService;
 
 import java.time.Year;
 import java.util.Optional;

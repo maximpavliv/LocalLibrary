@@ -1,7 +1,8 @@
-package ua.max.springcourse.models;
+package ua.max.springcourse.LocalLibrary.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity

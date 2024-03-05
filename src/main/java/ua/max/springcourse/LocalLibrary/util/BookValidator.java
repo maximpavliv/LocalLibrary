@@ -1,18 +1,18 @@
-package ua.max.springcourse.util;
+package ua.max.springcourse.LocalLibrary.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.max.springcourse.dao.BookDAO;
-import ua.max.springcourse.models.Book;
+import ua.max.springcourse.LocalLibrary.dao.BookDAO;
+import ua.max.springcourse.LocalLibrary.models.Book;
 
 import java.time.Year;
 
 @Component
 public class BookValidator implements Validator {
 
-    private final BookDAO  bookDAO;
+    private final BookDAO bookDAO;
 
     @Autowired
     public BookValidator(BookDAO bookDAO) {

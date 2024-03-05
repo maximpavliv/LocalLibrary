@@ -1,4 +1,4 @@
-package ua.max.springcourse.controllers;
+package ua.max.springcourse.LocalLibrary.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,15 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.max.springcourse.dao.BookDAO;
-import ua.max.springcourse.dao.PersonDAO;
-import ua.max.springcourse.models.Book;
-import ua.max.springcourse.models.Person;
-import ua.max.springcourse.services.BooksService;
-import ua.max.springcourse.services.PeopleService;
-import ua.max.springcourse.util.BookValidator;
+import ua.max.springcourse.LocalLibrary.dao.BookDAO;
+import ua.max.springcourse.LocalLibrary.dao.PersonDAO;
+import ua.max.springcourse.LocalLibrary.models.Book;
+import ua.max.springcourse.LocalLibrary.models.Person;
+import ua.max.springcourse.LocalLibrary.services.BooksService;
+import ua.max.springcourse.LocalLibrary.services.PeopleService;
+import ua.max.springcourse.LocalLibrary.util.BookValidator;
 
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -40,6 +40,7 @@ public class BooksController {
     public String index(@RequestParam(value = "page", required = false) Integer page,
                         @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
                         @RequestParam(value = "sort_by_year", defaultValue = "false") boolean sortByYear, Model model) {
+        System.out.println("Hello from index of books");
         if (page==null || booksPerPage == null)
             model.addAttribute("books", booksService.findAll(sortByYear));
         else

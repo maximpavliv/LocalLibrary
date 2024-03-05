@@ -1,12 +1,12 @@
-package ua.max.springcourse.services;
+package ua.max.springcourse.LocalLibrary.services;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.max.springcourse.models.Book;
-import ua.max.springcourse.models.Person;
-import ua.max.springcourse.repositories.BooksRepository;
+import ua.max.springcourse.LocalLibrary.models.Book;
+import ua.max.springcourse.LocalLibrary.models.Person;
+import ua.max.springcourse.LocalLibrary.repositories.BooksRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
